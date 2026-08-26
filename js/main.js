@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then(function (respuesta) {
           if (!respuesta.ok) throw new Error("Error en el envío");
-          status.textContent = "¡Gracias! Te contactaremos pronto por WhatsApp o teléfono.";
+          status.textContent = "¡Gracias! Te contactaremos pronto.";
           status.style.color = "green";
           form.reset();
         })
