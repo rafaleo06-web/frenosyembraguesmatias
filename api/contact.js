@@ -3,14 +3,14 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Método no permitido" });
   }
 
-  const { nombre, telefono, vehiculo, servicio, mensaje, empresa } = req.body;
+  const { nombre, correo, vehiculo, servicio, mensaje, empresa } = req.body;
 
   // Honeypot: si este campo oculto viene lleno, es un bot
   if (empresa) {
     return res.status(200).json({ ok: true });
   }
 
-  if (!nombre || !telefono || !mensaje) {
+  if (!nombre || !correo || !mensaje) {
     return res.status(400).json({ error: "Faltan campos obligatorios" });
   }
 
@@ -25,11 +25,11 @@ export default async function handler(req, res) {
         from: "Formulario Web <onboarding@resend.dev>",
         to: ["frenosyembraguesmatias@gmail.com"],
         reply_to: telefono, // opcional, no es email pero sirve de referencia
-        subject: `Nueva consulta de ${nombre}`,
+        subject: `Cotización de ${nombre}`,
         html: `
-          <h2>Nueva consulta desde el sitio web</h2>
+          <h2>Cotización desde el sitio web</h2>
           <p><strong>Nombre:</strong> ${nombre}</p>
-          <p><strong>Teléfono/WhatsApp:</strong> ${telefono}</p>
+          <p><strong>Correo:</strong> ${correo}</p>
           <p><strong>Vehículo:</strong> ${vehiculo || "No especificado"}</p>
           <p><strong>Servicio:</strong> ${servicio || "No especificado"}</p>
           <p><strong>Mensaje:</strong><br>${mensaje}</p>
