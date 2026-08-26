@@ -24,7 +24,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         from: "Formulario Web <onboarding@resend.dev>",
         to: ["frenosyembraguesmatias@gmail.com"],
-        reply_to: telefono, // opcional, no es email pero sirve de referencia
+        reply_to: correo, // opcional, no es email pero sirve de referencia
         subject: `Cotización de ${nombre}`,
         html: `
           <h2>Cotización desde el sitio web</h2>
