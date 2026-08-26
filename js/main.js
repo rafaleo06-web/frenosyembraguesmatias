@@ -15,14 +15,37 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Formulario de contacto: validación simple + mensaje de confirmación (sin backend)
+  // Formulario de contacto: envío real vía /api/contact (Resend)
   var form = document.getElementById("contact-form");
   if (form) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var status = document.getElementById("form-status");
-      status.textContent = "Centro de contacto en mantenimiento, por favor escribenos por WhatsApp o teléfono.";
-      status.style.color = "#ee0d0d";
-      form.reset();
+      var boton = form.querySelector('button[type="submit"]');
+      var datos = Object.fromEntries(new FormData(form));
+
+      boton.disabled = true;
+      status.style.color = "";
+      status.textContent = "Enviando...";
+
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos),
+      })
+        .then(function (respuesta) {
+          if (!respuesta.ok) throw new Error("Error en el envío");
+          status.textContent = "¡Gracias! Te contactaremos pronto por WhatsApp o teléfono.";
+          status.style.color = "green";
+          form.reset();
+        })
+        .catch(function () {
+          status.textContent = "Hubo un problema al enviar. Escríbenos directo por WhatsApp.";
+          status.style.color = "crimson";
+        })
+        .finally(function () {
+          boton.disabled = false;
+        });
     });
   }
 

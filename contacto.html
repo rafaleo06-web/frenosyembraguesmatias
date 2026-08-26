@@ -146,6 +146,10 @@
                   <label for="mensaje">Cuéntanos el síntoma o consulta</label>
                   <textarea id="mensaje" name="mensaje" required></textarea>
                 </div>
+                <div style="position: absolute; left: -9999px" aria-hidden="true">
+                  <label for="empresa">No llenar este campo</label>
+                  <input type="text" id="empresa" name="empresa" tabindex="-1" autocomplete="off" />
+                </div>
                 <div class="full">
                   <button type="submit" class="btn btn-primary btn-block">Enviar consulta</button>
                   <p id="form-status" style="margin-top: 12px; font-size: 13.5px"></p>
